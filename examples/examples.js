@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    $('#datepicker').Zebra_DatePicker();
+    $('#datepicker').Zebra_DatePicker(datepicker_fa_IR);
 
     $('#datepicker-future-tomorrow').Zebra_DatePicker({
         direction: 1

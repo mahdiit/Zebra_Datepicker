@@ -34,7 +34,10 @@
         this.version = '1.9.19';
 
         var defaults = {
-
+            //
+            // Multi Calendar Purpose
+            //
+            calendar: Date,
                 //  setting this property to a jQuery element, will result in the date picker being always visible, the indicated
                 //  element being the date picker's container;
                 //
@@ -802,7 +805,7 @@
                 var
 
                     // cache the current date (which is either the system's date or a custom one, if given)
-                    date = plugin.settings.current_date !== false ? new Date(plugin.settings.current_date) : new Date(),
+                    date = plugin.settings.current_date !== false ? new plugin.settings.calendar(plugin.settings.current_date) : new plugin.settings.calendar(),
 
                     // when the date picker's starting date depends on the value of another date picker, this value will be
                     // set by the other date picker
@@ -879,7 +882,7 @@
                         // figure out the starting date
                         // use the Date object to normalize the date
                         // for example, 2011 05 33 will be transformed to 2011 06 02
-                        start_date = new Date(
+                        start_date = new plugin.settings.calendar(
                             first_selectable_year,
                             first_selectable_month,
                             first_selectable_day + (!$.isArray(plugin.settings.direction) ? to_int(plugin.settings.direction) : to_int(plugin.settings.direction[0] === true ? 0 : plugin.settings.direction[0]))
@@ -899,7 +902,7 @@
                         // figure out the ending date
                         // use the Date object to normalize the date
                         // for example, 2011 05 33 will be transformed to 2011 06 02
-                        end_date = new Date(
+                        end_date = new plugin.settings.calendar(
                             first_selectable_year,
                             first_selectable_month,
                             first_selectable_day + to_int(plugin.settings.direction[1])
@@ -942,7 +945,7 @@
                     // figure out the ending date
                     // use the Date object to normalize the date
                     // for example, 2011 05 33 will be transformed to 2011 06 02
-                    end_date = new Date(
+                    end_date = new plugin.settings.calendar(
                         first_selectable_year,
                         first_selectable_month,
                         first_selectable_day + (!$.isArray(plugin.settings.direction) ? to_int(plugin.settings.direction) : to_int(plugin.settings.direction[0] === false ? 0 : plugin.settings.direction[0]))
@@ -962,7 +965,7 @@
                         // figure out the staring date
                         // use the Date object to normalize the date
                         // for example, 2011 05 33 will be transformed to 2011 06 02
-                        start_date = new Date(
+                        start_date = new plugin.settings.calendar(
                             last_selectable_year,
                             last_selectable_month,
                             last_selectable_day - to_int(plugin.settings.direction[1])
@@ -1002,7 +1005,7 @@
                                     tmpDates.push(parseInt(
                                         rule[2][0] +
                                         (rule[1][0] === '*' ? '12' : str_pad(rule[1][0], 2)) +
-                                        (rule[0][0] === '*' ? (rule[1][0] === '*' ? '31' : new Date(rule[2][0], rule[1][0], 0).getDate()) : str_pad(rule[0][0], 2)), 10));
+                                        (rule[0][0] === '*' ? (rule[1][0] === '*' ? '31' : new plugin.settings.calendar(rule[2][0], rule[1][0], 0).getDate()) : str_pad(rule[0][0], 2)), 10));
 
                             });
 
@@ -1069,7 +1072,7 @@
                             first_selectable_month--;
 
                             // because we've changed months, reset the day to the last day of the month
-                            first_selectable_day = new Date(first_selectable_year, first_selectable_month + 1, 0).getDate();
+                            first_selectable_day = new plugin.settings.calendar(first_selectable_year, first_selectable_month + 1, 0).getDate();
 
                         // otherwise
                         } else {
@@ -1104,7 +1107,7 @@
                             first_selectable_month = 11;
 
                             // because we've changed months, reset the day to the last day of the month
-                            first_selectable_day = new Date(first_selectable_year, first_selectable_month + 1, 0).getDate();
+                            first_selectable_day = new plugin.settings.calendar(first_selectable_year, first_selectable_month + 1, 0).getDate();
 
                         }
 
@@ -1121,7 +1124,7 @@
 
                         // use the Date object to normalize the date
                         // for example, 2011 05 33 will be transformed to 2011 06 02
-                        date = new Date(first_selectable_year, first_selectable_month, first_selectable_day);
+                        date = new plugin.settings.calendar(first_selectable_year, first_selectable_month, first_selectable_day);
 
                         // re-extract date parts from the normalized date
                         // as we use them in the current loop
@@ -1133,7 +1136,7 @@
 
                     // use the Date object to normalize the date
                     // for example, 2011 05 33 will be transformed to 2011 06 02
-                    date = new Date(first_selectable_year, first_selectable_month, first_selectable_day);
+                    date = new plugin.settings.calendar(first_selectable_year, first_selectable_month, first_selectable_day);
 
                     // re-extract date parts from the normalized date
                     // as we use them in the current loop
@@ -1619,7 +1622,7 @@
                 selecttoday.on('click', function(e) {
 
                     // date might have changed since we opened the date picker, so always use the current date
-                    var date = plugin.settings.current_date !== false ? new Date(plugin.settings.current_date) : new Date();
+                    var date = plugin.settings.current_date !== false ? new plugin.settings.calendar(plugin.settings.current_date) : new plugin.settings.calendar();
 
                     e.preventDefault();
 
@@ -1696,7 +1699,7 @@
                     // if a callback function exists for when selecting a date
                     if (plugin.settings.onSelect && typeof plugin.settings.onSelect === 'function') {
 
-                        var js_date = new Date(selected_year, selected_month, default_day,
+                        var js_date = new plugin.settings.calendar(selected_year, selected_month, default_day,
                             (timepicker_config && timepicker_config.hours ? selected_hour + (timepicker_config.ampm && ((selected_ampm === 'pm' && selected_hour < 12) || (selected_ampm === 'am' && selected_hour === 12)) ? 12 : 0) : 0),
                             (timepicker_config && timepicker_config.minutes ? selected_minute : 0),
                             (timepicker_config && timepicker_config.seconds ? selected_second : 0)
@@ -1946,7 +1949,7 @@
 
                             // check if date is a valid date (i.e. there's no February 31)
 
-                            var tmpdate = new Date(),
+                            var tmpdate = new plugin.settings.calendar(),
                                 original_day = 1,
                                 original_month = tmpdate.getMonth() + 1,
                                 original_year = tmpdate.getFullYear(),
@@ -2084,7 +2087,7 @@
 
                                 // generate a Date object using the values entered by the user
                                 // (handle also the case when original_month and/or original_day are undefined - i.e date format is "Y-m" or "Y")
-                                date = new Date(original_year, (original_month || 1) - 1, original_day || 1, original_hours + (original_ampm === 'pm' && original_hours !== 12 ? 12 : (original_ampm === 'am' && original_hours === 12 ? -12 : 0)), original_minutes, original_seconds);
+                                date = new plugin.settings.calendar(original_year, (original_month || 1) - 1, original_day || 1, original_hours + (original_ampm === 'pm' && original_hours !== 12 ? 12 : (original_ampm === 'am' && original_hours === 12 ? -12 : 0)), original_minutes, original_seconds);
 
                                 // if, after that, the date is the same as the date entered by the user
                                 if (date.getFullYear() === original_year && date.getDate() === (original_day || 1) && date.getMonth() === ((original_month || 1) - 1))
@@ -2306,13 +2309,13 @@
                 var
 
                     // get the number of days in the selected month
-                    days_in_month = new Date(selected_year, selected_month + 1, 0).getDate(),
+                    days_in_month = new plugin.settings.calendar(selected_year, selected_month + 1, 0).getDate(),
 
                     // get the selected month's starting day (from 0 to 6)
-                    first_day = new Date(selected_year, selected_month, 1).getDay(),
+                    first_day = new plugin.settings.calendar(selected_year, selected_month, 1).getDay(),
 
                     // how many days are there in the previous month
-                    days_in_previous_month = new Date(selected_year, selected_month, 0).getDate(),
+                    days_in_previous_month = new plugin.settings.calendar(selected_year, selected_month, 0).getDate(),
 
                     // how many days are there to be shown from the previous month
                     days_from_previous_month = first_day - plugin.settings.first_day_of_week,
@@ -2361,7 +2364,7 @@
                     if (i % 7 === 0 && plugin.settings.show_week_number)
 
                         // show ISO 8601 week number
-                        html += '<th scope="row">' + get_week_number(new Date(selected_year, selected_month, (i - days_from_previous_month + 1))) + '</th>';
+                        html += '<th scope="row">' + get_week_number(new plugin.settings.calendar(selected_year, selected_month, (i - days_from_previous_month + 1))) + '</th>';
 
                     // the number of the day in month
                     day = rtl_offset + (i - days_from_previous_month + 1);
@@ -2371,7 +2374,7 @@
 
                         // use the Date object to normalize the date
                         // for example, 2011 05 33 will be transformed to 2011 06 02
-                        real_date = new Date(selected_year, selected_month, day);
+                        real_date = new plugin.settings.calendar(selected_year, selected_month, day);
                         real_year = real_date.getFullYear();
                         real_month = real_date.getMonth();
                         real_day = real_date.getDate();
@@ -2657,7 +2660,7 @@
                                         if ($.inArray('*', rule[3]) > -1) return (found = class_name);
 
                                         // get the weekday
-                                        weekday = new Date(year, month - 1, day).getDay();
+                                        weekday = new plugin.settings.calendar(year, month - 1, day).getDay();
 
                                         // if custom class is to be applied to weekday
                                         // don't look any further
@@ -2904,7 +2907,7 @@
                                     if ($.inArray('*', rule[3]) > -1) return (disabled = true);
 
                                     // get the weekday
-                                    weekday = new Date(year, month - 1, day).getDay();
+                                    weekday = new plugin.settings.calendar(year, month - 1, day).getDay();
 
                                     // if weekday is to be disabled
                                     // don't look any further
@@ -2954,7 +2957,7 @@
                                             if ($.inArray('*', rule[3]) > -1) return (enabled = true);
 
                                             // get the weekday
-                                            weekday = new Date(year, month - 1, day).getDay();
+                                            weekday = new plugin.settings.calendar(year, month - 1, day).getDay();
 
                                             // if weekday is to be enabled
                                             // don't look any further
@@ -3439,7 +3442,7 @@
                 var
 
                     // construct a new date object from the arguments
-                    default_date = new Date(year, month, day,
+                    default_date = new plugin.settings.calendar(year, month, day,
                         (timepicker_config && timepicker_config.hours ? selected_hour + (timepicker_config.ampm ? (selected_ampm === 'pm' && selected_hour !== 12 ? 12 : (selected_ampm === 'am' && selected_hour === 12 ? -12 : 0)) : 0) : 12),
                         (timepicker_config && timepicker_config.minutes ? selected_minute : 0),
                         (timepicker_config && timepicker_config.seconds ? selected_second : 0)
@@ -3843,7 +3846,7 @@
                 if (default_date) current_date = default_date;
 
                 // use current system time otherwise
-                else current_date = new Date();
+                else current_date = new plugin.settings.calendar();
 
                 // extract time parts from it
                 selected_hour = current_date.getHours();
