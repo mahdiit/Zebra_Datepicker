@@ -1,6 +1,7 @@
 <img src="https://raw.githubusercontent.com/stefangabos/zebrajs/master/docs/images/logo.png" alt="zebrajs" align="right">
 
-# Zebra Datepicker &nbsp;[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=A+super-lightweight,+highly+configurable,+cross-browser+date/time+picker+jQuery+plugin&url=https://github.com/stefangabos/Zebra_Datepicker&via=stefangabos&hashtags=jquery,datepicker,timepicker,calendar,javascript)
+# Zebra Datepicker 
+(Calendar Base Version + Persian Calendar Included) &nbsp;[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=A+super-lightweight,+highly+configurable,+cross-browser+date/time+picker+jQuery+plugin&url=https://github.com/stefangabos/Zebra_Datepicker&via=stefangabos&hashtags=jquery,datepicker,timepicker,calendar,javascript)
 
 *A super-lightweight, highly configurable, cross-browser date/time picker jQuery plugin*
 
@@ -117,6 +118,26 @@ Load the style sheet file from a local source
 > Zebra Datepicker is also available on [cdnjs](https://cdnjs.com/libraries/Zebra_datepicker), one of the most famous free and public web front-end CDN services
 
 Now, within the DOM-ready event, attach the Zebra Datepicker plugin to a `<input type="text">` control.
+
+```javascript
+//Persian Config
+var datepicker_fa_IR = {
+    calendar: JalaliDate,
+    months: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+    days: ['یکشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه'],
+    months_abbr: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+    days_abbr: ['ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش'],
+    first_day_of_week: 6,
+    weekend_days: [5],
+    format: 'Y/m/d',
+    lang_clear_date: 'پاک کردن',
+    readonly_element: false,
+    show_select_today: 'امروز',
+    //offset: [2, 230],
+    open_icon_only: true,
+    rtl:true
+};
+```
 
 ```javascript
 $(document).ready(function() {
